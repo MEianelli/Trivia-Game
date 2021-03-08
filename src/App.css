@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  font-family: Montserrat , sans-serif;
+}
+
+:focus {
+  outline: 0;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.6rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.6rem;
+}
+
+select {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.6rem;
+}
+
