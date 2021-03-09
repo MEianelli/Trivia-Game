@@ -9,10 +9,6 @@ import Feedback from './components/Feedback';
 import './App.css';
 
 class App extends React.Component {
-  componentDidMount() {
-    localStorage.setItem('ranking', JSON.stringify([]));
-  }
-
   render() {
     return (
       <main>

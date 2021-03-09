@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { MD5 } from 'crypto-js';
 import TopInfobar from './TopInfobar';
 import './css/Feedback.css';
+import { updateRanking } from '../redux/actions';
 
 class Feedback extends React.Component {
   constructor() {
@@ -18,9 +19,15 @@ class Feedback extends React.Component {
   }
 
   componentDidMount() {
-    const { email, playerName, score } = this.props;
+    const { email, playerName, score, updateRankingAction } = this.props;
     const emailHash = MD5(email).toString();
     const gravatarUrl = `https://www.gravatar.com/avatar/${emailHash}`;
+    updateRankingAction({
+      name: playerName,
+      score,
+      picture: gravatarUrl,
+    });
+    /** 
     let ranking = JSON.parse(localStorage.getItem('ranking'));
     if (!ranking) ranking = [];
     ranking.push({
@@ -28,7 +35,7 @@ class Feedback extends React.Component {
       score,
       picture: gravatarUrl,
     });
-    localStorage.setItem('ranking', JSON.stringify(ranking));
+    localStorage.setItem('ranking', JSON.stringify(ranking));*/
   }
 
   playAgain() {
@@ -87,6 +94,7 @@ class Feedback extends React.Component {
   }
 }
 Feedback.propTypes = {
+  updateRankingAction: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   playerName: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
@@ -100,6 +108,9 @@ const mapStateToProps = (state) => ({
   playerName: state.login.playerName,
   score: state.update.score,
 });
-// const mapDispatchToProps = (dispatch) => ({});
 
-export default connect(mapStateToProps, null)(Feedback);
+const mapDispatchToProps = (dispatch) => ({
+  updateRankingAction: (obj) => dispatch(updateRanking(obj)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);

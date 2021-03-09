@@ -1,4 +1,5 @@
-import { LOGIN, GET_TOKEN, SAVE, SAVE_QUESTIONS, UPDATE_SCORE } from './actions';
+import { LOGIN, GET_TOKEN, SAVE, SAVE_QUESTIONS, 
+  UPDATE_SCORE, UPDATE_RANKING } from './actions';
 
 const initialLoginState = { email: '',
   playerName: '' };
@@ -43,6 +44,15 @@ export function questionsReducer(state = {}, { type, payload }) {
   switch (type) {
   case SAVE_QUESTIONS:
     return { ...state, ...payload };
+  default:
+    return state;
+  }
+}
+
+export function rankingReducer(state = [], { type, payload }) {
+  switch (type) {
+  case UPDATE_RANKING:
+    return [ ...state, payload];
   default:
     return state;
   }

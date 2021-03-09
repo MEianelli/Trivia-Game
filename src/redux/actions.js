@@ -6,6 +6,7 @@ export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const SAVE = 'SAVE';
 export const SAVE_QUESTIONS = 'SAVE_QUESTIONS';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
+export const UPDATE_RANKING = 'UPDATE_RANKING';
 
 export const saveLoginInfo = ({ email, playerName }) => ({
   type: LOGIN,
@@ -41,6 +42,10 @@ export function getQuestions(obj, token) {
     const questions = await fetchQuestionsAPI(obj, token);
     return dispatch(saveQuestions(questions));
   };
+}
+
+export function updateRanking(obj) {
+  return { type: UPDATE_RANKING, payload: obj };
 }
 
 export function fetchToken() {

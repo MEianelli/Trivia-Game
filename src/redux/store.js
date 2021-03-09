@@ -5,6 +5,7 @@ import { loginReducer as login,
   configReducer as config,
   questionsReducer as questions,
   updateReducer as update,
+  rankingReducer as ranking,
 } from './reducers';
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   config,
   questions,
   update,
+  ranking,
 });
 
 const store = createStore(rootReducer,

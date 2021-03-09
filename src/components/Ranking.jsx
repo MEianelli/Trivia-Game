@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './css/Ranking.css';
+
 
 class Ranking extends React.Component {
   render() {
-    const { history: { push } } = this.props;
-    const ranking = JSON.parse(localStorage.getItem('ranking'));
+    const { history: { push }, ranking } = this.props;
+    //const ranking = JSON.parse(localStorage.getItem('ranking'));
     const rankingList = ranking.sort((score1, score2) => (
       Number(score2.score) - Number(score1.score)
     ));
@@ -36,9 +38,17 @@ class Ranking extends React.Component {
 }
 
 Ranking.propTypes = {
+  ranking: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default Ranking;
+const mapStateToProps = state => ({
+  ranking: state.ranking,
+});
+
+//const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps,null)(Ranking);
+
