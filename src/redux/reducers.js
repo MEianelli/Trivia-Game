@@ -15,10 +15,10 @@ export function loginReducer(state = initialLoginState, { type, payload }) {
   }
 }
 
-export function updateReducer(state = { score: 0 }, { type, payload }) {
+export function updateReducer(state = { score: 0, assertions: 0 }, { type, payload }) {
   switch (type) {
   case UPDATE_SCORE:
-    return { ...state, score: payload };
+    return { ...state, ...payload};
   default:
     return state;
   }

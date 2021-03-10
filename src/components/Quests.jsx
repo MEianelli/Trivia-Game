@@ -27,8 +27,8 @@ class Quests extends React.Component {
 
   componentDidMount() {
     const { scoreRedux } = this.props;
-    localStorage.setItem('score', '0');
-    scoreRedux('0');
+    //localStorage.setItem('score', '0');
+    scoreRedux({ score: 0, assertions: 0});
   }
 
   encodeUtf8(s) {
@@ -74,31 +74,35 @@ class Quests extends React.Component {
     }));
   }
 
-  saveScore(timer, diff, score) {
-    const { scoreRedux } = this.props;
+  saveScore(timer, diff) {
+    const { scoreRedux, score, assertions } = this.props;
     const SUM_TEN = 10;
-    let savedScore = localStorage.getItem('score');
-    if (savedScore === null) savedScore = Number(score);
+    //let savedScore = localStorage.getItem('score');
+    //if (savedScore === null) savedScore = Number(score);
 
     const POINTS_HARD = 3;
     const POINTS_MEDIUM = 2;
 
     if (diff === 'hard') {
       const calc = SUM_TEN + (timer * POINTS_HARD);
-      localStorage.setItem('score', calc + Number(savedScore));
+      scoreRedux({ score: calc + score, assertions: assertions + 1});
+      //localStorage.setItem('score', calc + Number(savedScore));
     } else if (diff === 'medium') {
       const calc = SUM_TEN + (timer * POINTS_MEDIUM);
-      localStorage.setItem('score', calc + Number(savedScore));
+      scoreRedux({ score: calc + score, assertions: assertions + 1});
+      //localStorage.setItem('score', calc + Number(savedScore));
     } else {
       const calc = SUM_TEN + timer;
-      localStorage.setItem('score', calc + Number(savedScore));
+      scoreRedux({ score: calc + score, assertions: assertions + 1});
+      //localStorage.setItem('score', calc + Number(savedScore));
     }
-    const setScore = localStorage.getItem('score');
-    scoreRedux(setScore);
+    //const setScore = localStorage.getItem('score');
+    /*
     const state = JSON.parse(localStorage.getItem('state'));
     state.player.assertions += 1;
     state.player.score = Number(setScore);
     localStorage.setItem('state', JSON.stringify(state));
+    */
   }
 
   handleClickAnswers(answer, diff) {
@@ -132,7 +136,7 @@ class Quests extends React.Component {
   }
 
   render() {
-    const { questions, score } = this.props;
+    const { questions } = this.props;
     const { questNumber, disableBtn, timer, stopTimer } = this.state;
     if (questions.length > 0 && questions.length > questNumber) {
       const random = questions[questNumber].allAnswersRandom;
@@ -153,7 +157,7 @@ class Quests extends React.Component {
                 type="button"
                 data-testid={ e.dataTest }
                 disabled={ disableBtn }
-                onClick={ () => this.handleClickAnswers(e.dataTest, diff, score) }
+                onClick={ () => this.handleClickAnswers(e.dataTest, diff) }
                 className={ e.dataTest.replace(/-[0-9]/i, '') }
               >
                 { this.encodeUtf8(e.answer) }
@@ -181,6 +185,7 @@ class Quests extends React.Component {
 Quests.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object),
   score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
   scoreRedux: PropTypes.func.isRequired,
 };
 
@@ -191,10 +196,11 @@ Quests.defaultProps = {
 const mapStateToProps = (state) => ({
   questions: state.questions.results,
   score: state.update.score,
+  assertions: state.update.assertions,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  scoreRedux: (score) => dispatch(updateScore(score)),
+  scoreRedux: (obj) => dispatch(updateScore(obj)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quests);

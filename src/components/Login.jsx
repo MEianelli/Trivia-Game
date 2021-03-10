@@ -41,7 +41,7 @@ class Login extends React.Component {
     loginAction({ email, playerName });
     fetchTokenAction().then(
       (res) => {
-        localStorage.setItem('token', res.payload);
+        //localStorage.setItem('token', res.payload);
         getQuestionsAction(config, res.payload);
       },
     );

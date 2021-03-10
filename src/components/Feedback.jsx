@@ -51,9 +51,8 @@ class Feedback extends React.Component {
   }
 
   render() {
-    const { score } = this.props;
+    const { score, assertions } = this.props;
     const { history: { push } } = this.props;
-    const { assertions } = JSON.parse(localStorage.getItem('state')).player;
     const { redirect } = this.state;
     if (redirect) return (<Redirect to="/" />);
     return (
@@ -98,6 +97,7 @@ Feedback.propTypes = {
   email: PropTypes.string.isRequired,
   playerName: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -107,6 +107,7 @@ const mapStateToProps = (state) => ({
   email: state.login.email,
   playerName: state.login.playerName,
   score: state.update.score,
+  assertions: state.update.assertions,
 });
 
 const mapDispatchToProps = (dispatch) => ({

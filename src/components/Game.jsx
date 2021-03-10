@@ -6,19 +6,6 @@ import './css/Game.css';
 import TopInfobar from './TopInfobar';
 
 class Game extends React.Component {
-  componentDidMount() {
-    const { email, playerName, score } = this.props;
-    const state = {
-      player: {
-        name: playerName,
-        assertions: 0,
-        score,
-        gravatarEmail: email,
-      },
-    };
-    localStorage.setItem('state', JSON.stringify(state));
-  }
-
   render() {
     return (
       <>

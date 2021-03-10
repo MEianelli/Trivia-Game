@@ -13,9 +13,12 @@ export const saveLoginInfo = ({ email, playerName }) => ({
   payload: { email, playerName },
 });
 
-export const updateScore = (score) => ({
+export const updateScore = (obj) => ({
   type: UPDATE_SCORE,
-  payload: Number(score),
+  payload: {
+    score: Number(obj.score),
+    assertions: Number(obj.assertions),
+  }
 });
 
 function getToken(json) {
